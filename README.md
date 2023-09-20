@@ -1,8 +1,8 @@
 # 这个人很懒，什么也没留下!
 
-## 这个人太懒了，那就<a href="t.me/souhubbot?start=zanshang"><kbd><font color=red>点击赞赏</font></kbd></a>一下！
+## 这个人太懒了，那就<a href="https://t.me/souhubbot?start=zanshang"><kbd><font color=red>点击赞赏</font></kbd></a>一下！
 
-<a href="ton://transfer/EQDjlt7XOzerCWJL0fi_CopluGiJjkQghYS2oVpYPgFE3noM?text=%E8%B5%9E%E8%B5%8F%E5%8F%AC%E5%94%A4%E5%B8%88"><span class="keybs">打开TON钱包</span></a>
+### <a href="ton://transfer/EQDjlt7XOzerCWJL0fi_CopluGiJjkQghYS2oVpYPgFE3noM?text=%E8%B5%9E%E8%B5%8F%E5%8F%AC%E5%94%A4%E5%B8%88"><kbd>打开TON钱包</kbd></a>
 
 ````
 ```
