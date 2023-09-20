@@ -2,7 +2,8 @@
 
 ## 这个人太懒了，那就<kbd><a href='https://t.me/souhubbot?start=zanshang'><font color=red>点击赞赏</font></a></kbd>一下！
 
-[![名称|100](https://telegra.ph/file/6292c987e4d77940939a3.jpg)](ton://transfer/EQDjlt7XOzerCWJL0fi_CopluGiJjkQghYS2oVpYPgFE3noM?text=%E8%B5%9E%E8%B5%8F%E5%8F%AC%E5%94%A4%E5%B8%88)
+
+[![名称|100](https://telegra.ph/file/6292c987e4d77940939a3.jpg)](https://link.ton-rocket.com/transfer/EQDjlt7XOzerCWJL0fi_CopluGiJjkQghYS2oVpYPgFE3noM?text=%E5%BE%88%E6%A3%92%20%E6%88%91%E8%A6%81%E6%89%93%E8%B5%8F%E5%8F%AC%E5%94%A4%E5%B8%88%2010%20TON)
 
 ````
 ```
