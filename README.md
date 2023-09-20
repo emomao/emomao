@@ -1,6 +1,6 @@
 # 这个人很懒，什么也没留下!
 
-## 这个人太懒了，那就<kbd><a href='https://t.me/souhubbot?start=zanshang'><font color=red>点击赞赏</font></a>一下！</kbd>
+## 这个人太懒了，那就<kbd><a href='https://t.me/souhubbot?start=zanshang'><font color=red>点击赞赏</font></a></kbd>一下！
 
 ````
 ```
