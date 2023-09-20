@@ -2,6 +2,8 @@
 
 ## 这个人太懒了，那就<kbd><a href='https://t.me/souhubbot?start=zanshang'><font color=red>点击赞赏</font></a></kbd>一下！
 
+[![名称|100](https://telegra.ph/file/6292c987e4d77940939a3.jpg)](ton://transfer/EQDjlt7XOzerCWJL0fi_CopluGiJjkQghYS2oVpYPgFE3noM?text=%E8%B5%9E%E8%B5%8F%E5%8F%AC%E5%94%A4%E5%B8%88)
+
 ````
 ```
 模板
