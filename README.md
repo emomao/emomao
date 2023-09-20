@@ -1,6 +1,6 @@
 # 这个人很懒，什么也没留下!
 
-## [<font color=orange>召唤师</font>](https://t.me/www888)
+## <a href='https://t.me/souhubbot?start=zanshang'><font color=red>赞赏</font></a>
 
 ````
 ```
