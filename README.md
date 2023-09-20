@@ -1,6 +1,6 @@
 # 这个人很懒，什么也没留下!
 
-## <a href='https://t.me/souhubbot?start=zanshang'><font color=red>赞赏</font></a>
+## 这个人太懒了，那就<a href='https://t.me/souhubbot?start=zanshang'><font color=red>点击赞赏</font></a>一下！
 
 ````
 ```
