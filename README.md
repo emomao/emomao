@@ -87,5 +87,5 @@
 > ```
 
 
-<iframe src='https://www.baidu.com'></iftame>
+<iframe src='https://www.baidu.com'></iframe>
 
