@@ -1,6 +1,6 @@
 # 这个人很懒，什么也没留下!
 
-## 这个人太懒了，那就<a href='https://t.me/souhubbot?start=zanshang'><font color=red>点击赞赏</font></a>一下！
+## 这个人太懒了，那就<kbd><a href='https://t.me/souhubbot?start=zanshang'><font color=red>点击赞赏</font></a>一下！</kbd>
 
 ````
 ```
@@ -20,12 +20,9 @@
 <iframe src='https://嵌入网页.com'></iftame>
 ```
 
-^07a278
-
 ```
 [![名称](图片链接)](https:/打开的链接.com)
 ```
-
 
 ```
 <u>下划线</u>
