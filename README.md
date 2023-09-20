@@ -1,5 +1,7 @@
 # 这个人很懒，什么也没留下!
 
+<iframe src='https://www.baidu.com'></iftame>
+
 ````
 ```
 模板
