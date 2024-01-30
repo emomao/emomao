@@ -10,7 +10,7 @@
     <script src="https://cdn.bootcdn.net/ajax/libs/layui/2.7.6/layui.min.js"></script>
 </head>
 <style>
-.body {max-width: 500px;margin: auto;}
+body {max-width: 1000px;margin: auto;}
 .main {padding:6px 6px;margin:auto;background-color: white;}
 .tt {color: #1aa700;font-size: 1.2rem;font-weight: 700;padding: 8px;}
 .center {text-align: center;}
