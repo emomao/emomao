@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -11,14 +10,14 @@
     <script src="https://cdn.bootcdn.net/ajax/libs/layui/2.7.6/layui.min.js"></script>
 </head>
 <style>
-body {max-width: 500px;margin: auto;}
+.body {max-width: 500px;margin: auto;}
 .main {padding:6px 6px;margin:auto;background-color: white;}
 .tt {color: #1aa700;font-size: 1.2rem;font-weight: 700;padding: 8px;}
 .center {text-align: center;}
 </style>
 <body>
     <div class="main">
-        <blockquote class="layui-elem-quote tt">短视频解析</blockquote>
+        <blockquote class="layui-elem-quote tt">短视频解析去水印</blockquote>
         <div class="layui-row">
             <div class="layui-col-md12">
                 <div class="layui-card-body" id="player" style="display: none;">
@@ -165,5 +164,4 @@ body {max-width: 500px;margin: auto;}
         }
     });
 </script>
-</body>
 </html>
