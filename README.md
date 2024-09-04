@@ -1,167 +1,386 @@
+<!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>短视频解析</title>
-    <meta name="renderer" content="webkit">
-    <meta name="referrer" content="never">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href="https://cdn.bootcdn.net/ajax/libs/layui/2.7.6/css/layui.min.css" rel="stylesheet">
-    <script src="https://cdn.bootcdn.net/ajax/libs/layui/2.7.6/layui.min.js"></script>
-</head>
-<style>
-.body {max-width: 1000px;margin: auto;}
-.main {padding:6px 6px;margin:auto;background-color: white;}
-.tt {color: #1aa700;font-size: 1.2rem;font-weight: 700;padding: 8px;}
-.center {text-align: center;}
-</style>
-<body>
-    <div class="main">
-        <blockquote class="layui-elem-quote tt">短视频解析去水印</blockquote>
-        <div class="layui-row">
-            <div class="layui-col-md12">
-                <div class="layui-card-body" id="player" style="display: none;">
-                    <div class="layui-form-item" style="margin: 0 10px 10px 10px;">
-                        <video name="video" id="video" width="100%" controls autoplay loop></video>
-                    </div>
-                </div>
-            </div>
-            <div class="layui-col-md12">
-                <div class="layui-card-body">
-                    <form class="layui-form layui-form-pane" action="">
-                        <div class="layui-form-item layui-form-text">
-                            <label class="layui-form-label">输入分享链接</label>
-                            <div class="layui-input-block">
-                            <textarea name="link" id="link" placeholder="请输入内容" class="layui-textarea"> https://v.douyin.com/iLckvYDW/ </textarea>
-                            </div>
-                        </div>
-                        <input type="text" name="downloadurl" style="display: none;">
-                        <input type="text" name="filename" style="display: none;">
-                        <div class="layui-form-item center">
-                        <button class="layui-btn" lay-submit="" lay-filter="Submit">提交</button>
-                        <button class="layui-btn" lay-submit="" lay-filter="Remove">再来一个</button>
-                        <button class="layui-btn" lay-submit="" id="download" style="display: none;" lay-filter="Download">下载</button>
-                        </div>
-                    </form>
-                </div>
-                <div id="Result" style="display: none;">
-                    <div class="layui-card-header">解析结果</div>
-                    <div class="layui-card-body">
-                        <div class="layui-field-box">
-                            <div style="margin-top: 0px;">
-                            <p><span class="layui-badge">uid</span> <span id="uid"></span></p>
-                            <p><span class="layui-badge">author</span> <span id="author"></span></p>
-                            <p><span class="layui-badge">create_time</span> <span id="create_time"></span></p>
-                            <p><span class="layui-badge">desc</span> <span id="desc"></span></p>
-                            <p><span class="layui-badge">video_id</span> <span id="video_id"></span></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <head>
+    <title></title>
+    <script src="js/jquery.min.js"></script>
+  </head>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    html,
+    body {
+      height: 100%;
+      padding: 0;
+      margin: 0;
+      background: #000;
+    }
+ 
+    .aa {
+      position: fixed;
+      left: 50%;
+      bottom: 10px;
+      color: #ccc;
+    }
+ 
+    .container {
+      width: 100%;
+      height: 100%;
+    }
+    canvas {
+      z-index: 99;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+  <body>
+    <!-- 樱花 -->
+    <div id="jsi-cherry-container" class="container">
+      <audio autoplay="autopaly">
+        <source src="renxi.mp3" type="audio/mp3" />
+      </audio>
+      <img class="img" src="./123.png" alt="" />
+      <!-- 爱心 -->
+      <canvas id="pinkboard" class="container"> </canvas>
     </div>
-</body>
-<script>
-    layui.use(['form'], function(){
-        var form = layui.form
-        ,$ = layui.jquery
-        ,layer = layui.layer;
  
-        form.on('submit(Submit)', function(data){
-            var link = data.field.link;
-            if (link.length === 0) {
-                layer.alert('请输入您要解析的内容！', { title: '提示' })
-                return false;
-            }
- 
-            var i = link.lastIndexOf("https://");
-            i = i === -1 ? link.lastIndexOf("http://") : i;
-            var url = link.substr(i);
-            var index = layer.load(0, {shade: false});
-            $.ajax({
-                type: 'GET',
-                url: 'https://api.qoc.cc/api/video?url=' + url,
-                success: function(s) {
-                    if (s.code === 200) {
-                        var filename = s.data.title
-                        var videourl = s.data.url;
-                        $('#author').html(s.data.author);
-                        $('#uid').html(s.data.uid);
-                        $('#create_time').html(s.data.time);
-                        $('#desc').html(s.data.title);
-                        $('#video_id').html(s.data.like);
-                        $('#title').html(filename);
-                        $('#download').show();
-                        $('#Result').show();
-                        $('#vice').show();
-                        downloadBlobFile('get', videourl).onreadystatechange = res=>{
-                            if (res.currentTarget.readyState == 4 && res.currentTarget.status == 200) {
-                                const url = window.URL.createObjectURL(res.currentTarget.response);
-                                $('#video').attr('src',url);
-                                $('#player').show();
-                                $("input[name=downloadurl]").val(url);
-                            }
-                        }
-                        $("input[name=filename]").val(filename);
-                        document.title = filename;
-                    } else {
-                        layer.msg(s.message);
-                    }
-                    layer.close(index);
-                }
-            });
-            return false;
-        });
- 
-        form.on('submit(Remove)', function(data){
-            $("#Result").hide();
-            $("#link").val('');
-            $('#video').attr('src','');
-            $('#download').hide();
-            $('#player').hide();
-            $('#vice').hide();
-            return false;
-        });
- 
-        form.on('submit(Download)', function(data){
-            downloadBlobFile('get',data.field.downloadurl).onreadystatechange = res=>{
-                if(res.currentTarget.readyState == 4 &&  res.currentTarget.status==200){
-                    const url = window.URL.createObjectURL(res.currentTarget.response);
-                    let a = document.createElement('a');
-                    a.href=url;
-                    a.download = data.field.filename;
-                    a.click();
-                }
-            }
-            return false;
-        });
- 
-        function downloadBlobFile(_method,_url){
-            const request = new XMLHttpRequest();
-            request.open(_method,_url);
-            request.send();
-            request.responseType = 'blob';
-            return request;
-        }
-        function isClipboardAPIEnabled() {
-            return !!(navigator.clipboard && navigator.clipboard.readText);
-        }
-        function addClipboardEventListener() {
-            var pasteButton = document.getElementById('paste-button');
-            pasteButton.addEventListener('click', async function() {
-                try {
-                    var text = await navigator.clipboard.readText();
-                    $('#link').val(text);
-                } catch (err) {
-                    console.error('An error occurred while reading clipboard contents:', err);
-                }
-            });
-        }
-        if (!isClipboardAPIEnabled()) {
-            document.getElementById('paste-button').style.display = 'block';
-            addClipboardEventListener();
-        }
-    });
-</script>
+  </body>
 </html>
+<script>
+    /*
+     * Settings
+     */
+    var settings = {
+      particles: {
+        length: 500, // maximum amount of particles
+        duration: 2, // particle duration in sec
+        velocity: 100, // particle velocity in pixels/sec
+        effect: -0.75, // play with this for a nice effect
+        size: 30, // particle size in pixels
+      },
+    };
+ 
+    (function () {
+      var b = 0;
+      var c = ["ms", "moz", "webkit", "o"];
+      for (var a = 0; a < c.length && !window.requestAnimationFrame; ++a) {
+        window.requestAnimationFrame = window[c[a] + "RequestAnimationFrame"];
+        window.cancelAnimationFrame =
+          window[c[a] + "CancelAnimationFrame"] ||
+          window[c[a] + "CancelRequestAnimationFrame"];
+      }
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = function (h, e) {
+          var d = new Date().getTime();
+          var f = Math.max(0, 16 - (d - b));
+          var g = window.setTimeout(function () {
+            h(d + f);
+          }, f);
+          b = d + f;
+          return g;
+        };
+      }
+      if (!window.cancelAnimationFrame) {
+        window.cancelAnimationFrame = function (d) {
+          clearTimeout(d);
+        };
+      }
+    })();
+ 
+    /*
+     * Point class
+     */
+    var Point = (function () {
+      function Point(x, y) {
+        this.x = typeof x !== "undefined" ? x : 0;
+        this.y = typeof y !== "undefined" ? y : 0;
+      }
+      Point.prototype.clone = function () {
+        return new Point(this.x, this.y);
+      };
+      Point.prototype.length = function (length) {
+        if (typeof length == "undefined")
+          return Math.sqrt(this.x * this.x + this.y * this.y);
+        this.normalize();
+        this.x *= length;
+        this.y *= length;
+        return this;
+      };
+      Point.prototype.normalize = function () {
+        var length = this.length();
+        this.x /= length;
+        this.y /= length;
+        return this;
+      };
+      return Point;
+    })();
+ 
+    /*
+     * Particle class
+     */
+    var Particle = (function () {
+      function Particle() {
+        this.position = new Point();
+        this.velocity = new Point();
+        this.acceleration = new Point();
+        this.age = 0;
+      }
+      Particle.prototype.initialize = function (x, y, dx, dy) {
+        this.position.x = x;
+        this.position.y = y;
+        this.velocity.x = dx;
+        this.velocity.y = dy;
+        this.acceleration.x = dx * settings.particles.effect;
+        this.acceleration.y = dy * settings.particles.effect;
+        this.age = 0;
+      };
+      Particle.prototype.update = function (deltaTime) {
+        this.position.x += this.velocity.x * deltaTime;
+        this.position.y += this.velocity.y * deltaTime;
+        this.velocity.x += this.acceleration.x * deltaTime;
+        this.velocity.y += this.acceleration.y * deltaTime;
+        this.age += deltaTime;
+      };
+      Particle.prototype.draw = function (context, image) {
+        function ease(t) {
+          return --t * t * t + 1;
+        }
+        var size = image.width * ease(this.age / settings.particles.duration);
+        context.globalAlpha = 1 - this.age / settings.particles.duration;
+        context.drawImage(
+          image,
+          this.position.x - size / 2,
+          this.position.y - size / 2,
+          size,
+          size
+        );
+      };
+      return Particle;
+    })();
+ 
+    /*
+     * ParticlePool class
+     */
+    var ParticlePool = (function () {
+      var particles,
+        firstActive = 0,
+        firstFree = 0,
+        duration = settings.particles.duration;
+ 
+      function ParticlePool(length) {
+        // create and populate particle pool
+        particles = new Array(length);
+        for (var i = 0; i < particles.length; i++)
+          particles[i] = new Particle();
+      }
+      ParticlePool.prototype.add = function (x, y, dx, dy) {
+        particles[firstFree].initialize(x, y, dx, dy);
+ 
+        // handle circular queue
+        firstFree++;
+        if (firstFree == particles.length) firstFree = 0;
+        if (firstActive == firstFree) firstActive++;
+        if (firstActive == particles.length) firstActive = 0;
+      };
+      ParticlePool.prototype.update = function (deltaTime) {
+        var i;
+ 
+        // update active particles
+        if (firstActive < firstFree) {
+          for (i = firstActive; i < firstFree; i++)
+            particles[i].update(deltaTime);
+        }
+        if (firstFree < firstActive) {
+          for (i = firstActive; i < particles.length; i++)
+            particles[i].update(deltaTime);
+          for (i = 0; i < firstFree; i++) particles[i].update(deltaTime);
+        }
+ 
+        // remove inactive particles
+        while (
+          particles[firstActive].age >= duration &&
+          firstActive != firstFree
+        ) {
+          firstActive++;
+          if (firstActive == particles.length) firstActive = 0;
+        }
+      };
+      ParticlePool.prototype.draw = function (context, image) {
+        // draw active particles
+        if (firstActive < firstFree) {
+          for (i = firstActive; i < firstFree; i++)
+            particles[i].draw(context, image);
+        }
+        if (firstFree < firstActive) {
+          for (i = firstActive; i < particles.length; i++)
+            particles[i].draw(context, image);
+          for (i = 0; i < firstFree; i++) particles[i].draw(context, image);
+        }
+      };
+      return ParticlePool;
+    })();
+ 
+    /*
+     * Putting it all together
+     */
+    (function (canvas) {
+      var context = canvas.getContext("2d"),
+        particles = new ParticlePool(settings.particles.length),
+        particleRate =
+          settings.particles.length / settings.particles.duration, // particles/sec
+        time;
+ 
+      // get point on heart with -PI <= t <= PI
+      function pointOnHeart(t) {
+        return new Point(
+          160 * Math.pow(Math.sin(t), 3),
+          130 * Math.cos(t) -
+            50 * Math.cos(2 * t) -
+            20 * Math.cos(3 * t) -
+            10 * Math.cos(4 * t) +
+            25
+        );
+      }
+ 
+      // creating the particle image using a dummy canvas
+      var image = (function () {
+        var canvas = document.createElement("canvas"),
+          context = canvas.getContext("2d");
+        canvas.width = settings.particles.size;
+        canvas.height = settings.particles.size;
+        // helper function to create the path
+        function to(t) {
+          var point = pointOnHeart(t);
+          point.x =
+            settings.particles.size / 2 +
+            (point.x * settings.particles.size) / 350;
+          point.y =
+            settings.particles.size / 2 -
+            (point.y * settings.particles.size) / 350;
+          return point;
+        }
+        // create the path
+        context.beginPath();
+        var t = -Math.PI;
+        var point = to(t);
+        context.moveTo(point.x, point.y);
+        while (t < Math.PI) {
+          t += 0.01; // baby steps!
+          point = to(t);
+          context.lineTo(point.x, point.y);
+        }
+        context.closePath();
+        // create the fill
+        context.fillStyle = "#ea80b0";
+        context.fill();
+        // create the image
+        var image = new Image();
+        image.src = canvas.toDataURL();
+        return image;
+      })();
+ 
+      // render that thing!
+      function render() {
+        // next animation frame
+        requestAnimationFrame(render);
+ 
+        // update time
+        var newTime = new Date().getTime() / 1000,
+          deltaTime = newTime - (time || newTime);
+        time = newTime;
+ 
+        // clear canvas
+        context.clearRect(0, 0, canvas.width, canvas.height);
+ 
+        // create new particles
+        var amount = particleRate * deltaTime;
+        for (var i = 0; i < amount; i++) {
+          var pos = pointOnHeart(Math.PI - 2 * Math.PI * Math.random());
+          var dir = pos.clone().length(settings.particles.velocity);
+          particles.add(
+            canvas.width / 2 + pos.x,
+            canvas.height / 2 - pos.y,
+            dir.x,
+            -dir.y
+          );
+        }
+ 
+        // update and draw particles
+        particles.update(deltaTime);
+        particles.draw(context, image);
+      }
+ 
+      // handle (re-)sizing of the canvas
+      function onResize() {
+        canvas.width = canvas.clientWidth;
+        canvas.height = canvas.clientHeight;
+      }
+      window.onresize = onResize;
+ 
+      // delay rendering bootstrap
+      setTimeout(function () {
+        onResize();
+        render();
+      }, 10);
+    })(document.getElementById("pinkboard"));
+  </script>
+ 
+  <script>
+    var RENDERER = {
+      INIT_CHERRY_BLOSSOM_COUNT: 30,
+      MAX_ADDING_INTERVAL: 10,
+ 
+      init: function () {
+        this.setParameters();
+        this.reconstructMethods();
+        this.createCherries();
+        this.render();
+        if (
+          navigator.userAgent.match(
+            /(phone|pod|iPhone|iPod|ios|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
+          )
+        ) {
+          // var box = document.querySelectorAll(".box")[0];
+          // console.log(box, "移动端");
+          // box.style.marginTop = "65%";
+        }
+      },
+      setParameters: function () {
+        this.$container = $("#jsi-cherry-container");
+        this.width = this.$container.width();
+        this.height = this.$container.height();
+        this.context = $("<canvas />")
+          .attr({ width: this.width, height: this.height })
+          .appendTo(this.$container)
+          .get(0)
+        var rate = this.FOCUS_POSITION / (this.z + this.FOCUS_POSITION),
+          x = this.renderer.width / 2 + this.x * rate,
+          y = this.renderer.height / 2 - this.y * rate;
+        return { rate: rate, x: x, y: y };
+      },
+      re
+          }
+        } else {
+          this.phi += Math.PI / (axis.y == this.thresholdY ? 200 : 500);
+          this.phi %= Math.PI;
+        }
+        if (this.y <= -this.renderer.height * this.SURFACE_RATE) {
+          this.x += 2;
+          this.y = -this.renderer.height * this.SURFACE_RATE;
+        } else {
+          this.x += this.vx;
+          this.y += this.vy;
+        }
+        return (
+          this.z > -this.FOCUS_POSITION &&
+          this.z < this.FAR_LIMIT &&
+          this.x < this.renderer.width * 1.5
+        );
+      },
+    };
+    $(function () {
+      RENDERER.init();
+    });
+  </script>
